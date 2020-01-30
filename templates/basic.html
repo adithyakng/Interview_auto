@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>HR</title>
+        <script>
+            function toDB()
+            {
+                var date=document.getElementById("date").value;
+                var time=[];
+                for(var i=0;i<3;i++)
+                {
+                    if(document.getElementById("time"+i).checked)
+                    {
+                        time.push(document.getElementById("time"+i).value);
+                    }
+                }
+                console.log(time);
+                console.log(date);
+                var xhttp=new XMLHttpRequest();
+                var input_json={
+                    'date':date,
+                    'time':time
+                };
+                console.log(input_json);
+                xhttp.onreadystatechange=function (){
+                    if(this.status==200 && this.readyState==4)
+                    {
+                        var reply=JSON.parse(this.responseText);
+                        document.getElementById("reply").innerHTML="Slots for "+date+" has been added";
+                    }
+                };
+                xhttp.open('POST','/todb',true);
+                xhttp.setRequestHeader('Content-Type','application/json');
+                xhttp.send(JSON.stringify(input_json));
+            }
+        </script>
+    </head>
+<body>
+    <label>Select dates</label>
+    <input type="date" id="date" name="date" min="2020-01-01" max="2020-01-31">
+    
+    <label>Slot Timings</label>
+    <br>
+    <input type="checkbox" id="time0" value="12.00PM">12.00PM<br>
+    <input type="checkbox" id="time1" value="2.00PM">2.00PM<br>
+    <input type="checkbox" id="time2" value="4.00PM">4.00PM<br>
+    <button type="button" onclick="toDB()">ADD</button><br><br> <br>
+    <form action="/logout" method="POST">
+        <input type="submit" value="LOGOUT">
+    </form>
+    <p id="reply"></p>
+</body>
+</html>

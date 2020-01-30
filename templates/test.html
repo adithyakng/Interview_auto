@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>HR</title>
+        <script>
+            function toDB()
+            {
+                var date=document.getElementById("date").value;
+                console.log(date);
+                var xhttp=new XMLHttpRequest();
+                var input_json={
+                    'date':date,
+                };
+                console.log(input_json);
+                xhttp.onreadystatechange=function (){
+                    if(this.status==200 && this.readyState==4)
+                    {
+                        console.log("Adithya")
+                    }
+                };
+                xhttp.open('POST','/demo',true);
+                xhttp.setRequestHeader('Content-Type','application/json');
+                xhttp.send(JSON.stringify(input_json));
+            }
+        </script>
+    </head>
+<body>
+    <label>Select dates</label>
+    <input type="date" id="date" name="date" min="2020-01-01" max="2020-01-31">
+    <button type="button" onclick="toDB()">ADD</button><br>
+    <p id="reply"></p>
+</body>
+</html>
